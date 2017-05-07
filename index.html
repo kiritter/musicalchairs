@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Simulation : METAFIVE - [PV] Musical Chairs</title>
+<meta name="description" content="An Example of JavaScript" />
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+<link href="main.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	.button {
+		margin-bottom: 10px;
+	}
+
+	.text-area {
+		font-family: 'Roboto Mono', monospace;
+		font-style: italic;
+		font-weight: bold;
+		font-size: 50pt;
+		/* 中央寄せ */
+		display: inline-block;
+		width: 100%;
+		text-align: center;
+		/* 末尾に半角スペースが来たときに表示で無視されないように1文字分として表示させるため */
+		white-space: pre;
+	}
+</style>
+
+<script>
+	//--------------------------------------------------
+	function startNormalAsc(textType) {
+		start(textType, SpinningCharView.SPEED_TYPE.NORMAL, SpinningCharView.ORDER_TYPE.ASC);
+	}
+
+	function startSlowAsc(textType) {
+		start(textType, SpinningCharView.SPEED_TYPE.SLOW, SpinningCharView.ORDER_TYPE.ASC);
+	}
+
+	function startNormalDesc(textType) {
+		start(textType, SpinningCharView.SPEED_TYPE.NORMAL, SpinningCharView.ORDER_TYPE.DESC);
+	}
+
+	function start(textType, speedType, orderType) {
+		var text1;
+		var text2;
+		var text3;
+
+		if (textType === 1) {
+			text1 = 'WE WILL BE';
+			text2 = 'GREAT SOFTWARE';
+			text3 = 'DEVELOPERS SOMEDAY';
+		}else{
+			text1 = 'I DON\'T WANNA';
+			text2 = 'PLAY YOUR';
+			text3 = 'MUSICAL CHAIRS';
+		}
+
+		display(text1, text2, text3, speedType, orderType);
+	}
+
+	//--------------------------------------------------
+	var view1;
+	var view2;
+	var view3;
+
+	function display(text1, text2, text3, speedType, orderType) {
+		if (view1) {
+			view1.clear();
+			view2.clear();
+			view3.clear();
+		}
+
+		view1 = new SpinningCharView(text1, 'text-area1', speedType, orderType);
+		view2 = new SpinningCharView(text2, 'text-area2', speedType, orderType);
+		view3 = new SpinningCharView(text3, 'text-area3', speedType, orderType);
+
+		view1.drawText(function() {
+			view2.drawText(function() {
+				view3.drawText(function() {
+					//終了
+				});
+			});
+		});
+	}
+	//------------------------------
+</script>
+</head>
+
+<body>
+<div id="main">
+	<div id="memo">
+		<dl class="cf">
+			<dt>GitHub Code</dt>
+			<dd><a target="_blank" href="https://github.com/kirishimapublic/musicalchairs/">https://github.com/kirishimapublic/musicalchairs/</a></dd>
+		</dl>
+	</div>
+	<div id="content">
+		<input type="button" class="button" value="描画開始！(その１)" onclick="startNormalAsc(1);">
+		<input type="button" class="button" value="Slow" onclick="startSlowAsc(1);">
+		<input type="button" class="button" value="Desc" onclick="startNormalDesc(1);">
+		<br>
+		<input type="button" class="button" value="描画開始！(その２＝歌詞)" onclick="startNormalAsc(2);">
+		<input type="button" class="button" value="Slow" onclick="startSlowAsc(2);">
+		<input type="button" class="button" value="Desc" onclick="startNormalDesc(2);">
+		<br>
+		<span class="text-area" id="text-area1"></span>
+		<br>
+		<span class="text-area" id="text-area2"></span>
+		<br>
+		<span class="text-area" id="text-area3"></span>
+	</div>
+</div>
+<script src="musical_chairs.js"></script>
+</body>
+</html>
